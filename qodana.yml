@@ -1,0 +1,12 @@
+version: 1.0
+linter: jetbrains/qodana-jvm:latest
+projectJDK: 17
+include:
+  - name: CheckDependencyLicenses
+  - name: HtmlUnknownTag
+  - name: DuplicateCode
+exclude:
+  - name: All
+    paths:
+      - .github
+      - target

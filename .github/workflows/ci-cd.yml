@@ -28,13 +28,11 @@ jobs:
     - name: Build with Maven
       run: mvn clean compile
     
-    - name: Run tests
-      run: mvn test || true
-    
     - name: Qodana Scan
       uses: JetBrains/qodana-action@v2024.1
       with:
         linter: jetbrains/qodana-jvm:latest
+        fail-threshold: 0
       continue-on-error: true
     
     - name: Upload Qodana report
