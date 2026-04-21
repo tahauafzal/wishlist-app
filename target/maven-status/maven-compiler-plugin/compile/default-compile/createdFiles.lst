@@ -1,9 +1,0 @@
-com/wishlist/model/Wishlist.class
-com/wishlist/model/User.class
-com/wishlist/service/WishlistService.class
-com/wishlist/repository/UserRepository.class
-com/wishlist/repository/WishlistItemRepository.class
-com/wishlist/WishlistApplication.class
-com/wishlist/repository/WishlistRepository.class
-com/wishlist/model/WishlistItem.class
-com/wishlist/controller/WishlistController.class
