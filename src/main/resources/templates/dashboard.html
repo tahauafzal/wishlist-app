@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Wishlists</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: auto; }
+        .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .wishlist { background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .item { border-left: 3px solid #4CAF50; padding: 10px; margin: 10px 0; background: #f9f9f9; }
+        .reserved { background: #ffe6e6; border-left-color: #ff4444; }
+        button { background: #4CAF50; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+        input, textarea { width: 100%; padding: 8px; margin: 5px 0; border: 1px solid #ddd; border-radius: 4px; }
+        .form-group { margin-bottom: 15px; }
+        h1, h2, h3 { color: #333; }
+        .reserve-btn { background: #ff9800; }
+        .share-link { background: #e3f2fd; padding: 10px; border-radius: 4px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎁 My Wishlists</h1>
+        <p>Welcome, <strong th:text="${user.name}"></strong>!</p>
+        
+        <!-- Create Wishlist Form -->
+        <div class="card">
+            <h3>Create New Wishlist</h3>
+            <form method="post" action="/wishlist/create">
+                <div class="form-group">
+                    <input type="text" name="title" placeholder="Wishlist Title" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="description" placeholder="Description" rows="2"></textarea>
+                </div>
+                <button type="submit">Create Wishlist</button>
+            </form>
+        </div>
+        
+        <!-- Display Wishlists -->
+        <div th:each="wishlist : ${wishlists}">
+            <div class="wishlist">
+                <h2 th:text="${wishlist.title}"></h2>
+                <p th:text="${wishlist.description}"></p>
+                
+                <div class="share-link">
+                    🔗 Share this wishlist: 
+                    <code th:text="${'http://localhost:8080/shared/' + wishlist.id}"></code>
+                </div>
+                
+                <!-- Add Item Form -->
+                <div class="card">
+                    <h4>Add Item to Wishlist</h4>
+                    <form method="post" th:action="@{/wishlist/{id}/add-item(id=${wishlist.id})}">
+                        <input type="text" name="name" placeholder="Item Name" required>
+                        <input type="text" name="description" placeholder="Description">
+                        <input type="text" name="link" placeholder="Product Link (URL)">
+                        <button type="submit">Add Item</button>
+                    </form>
+                </div>
+                
+                <!-- Items List -->
+                <h3>Items:</h3>
+                <div th:each="item : ${wishlist.items}">
+                    <div class="item" th:classappend="${item.reserved} ? 'reserved' : ''">
+                        <strong th:text="${item.name}"></strong><br>
+                        <span th:text="${item.description}"></span><br>
+                        <a th:href="${item.link}" target="_blank" th:if="${item.link}">View Product</a>
+                        <div th:if="${!item.reserved}">
+                            <form method="post" th:action="@{/item/{id}/reserve(id=${item.id})}" style="display: inline;">
+                                <button type="submit" class="reserve-btn">Reserve Item</button>
+                            </form>
+                        </div>
+                        <div th:if="${item.reserved}" style="color: red;">
+                            ❌ RESERVED
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <br>
+        <a href="/">← Back to Home</a>
+    </div>
+</body>
+</html>

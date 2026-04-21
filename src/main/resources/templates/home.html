@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Wishlist App</title>
+    <style>
+        body { font-family: Arial; text-align: center; margin-top: 50px; }
+        .button { background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; display: inline-block; margin: 10px; border-radius: 5px; }
+        .container { max-width: 600px; margin: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎁 Wishlist App</h1>
+        <p th:text="${message}"></p>
+        <p>Create, share, and reserve wishlist items!</p>
+        <a href="/dashboard" class="button">View Dashboard</a>
+    </div>
+</body>
+</html>
